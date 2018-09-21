@@ -1,5 +1,5 @@
 # Used multiblink program for offboard led 
-# Tried to upload video, but it took up too much data 
+# Tried to upload video, but it took up too much data :(
 
 #include <msp430.h> 
 #include <LED.h>
