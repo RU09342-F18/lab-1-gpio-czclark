@@ -8,11 +8,15 @@
 #ifndef LED_H_
 #define LED_H_
 
-void Simpleblink();
+// Note, run only one of these functions at the same time
 
-void Multiblink();
+void Simpleblink(); // Continuously toggles one LED
 
-void Buttonpress();
+void Multiblink(); // Toggles 2 LEDs for the MSP430F5529
+                   // Toggles 2 LEDs and an RGB for the MSP430G2
+                      // RGB goes from red, to green, to blue, to white
+
+void Buttonpress(); // LED cuts on with a button press
 
 
 #endif // LED_H_
