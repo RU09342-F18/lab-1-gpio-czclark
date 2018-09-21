@@ -1,0 +1,18 @@
+/*
+ * LED.h
+ *
+ *  Created on: Sep 18, 2018
+ *      Author: colby
+ */
+
+#ifndef LED_H_
+#define LED_H_
+
+void Simpleblink();
+
+void Multiblink();
+
+void Buttonpress();
+
+
+#endif // LED_H_
