@@ -8,45 +8,45 @@
 
 #include <msp430.h>
 
-void Simpleblink()
+void Simpleblink() // Blinks one LED on and off
 {
-    P1SEL &= ~BIT0;
-    P1DIR |= BIT0; // configure P1.0 as output
+    P1SEL &= ~BIT0; // Set port 1, pin 0 as GPIO
+    P1DIR |= BIT0; // configure P1.0 as an output
 
 
     volatile unsigned int i;        // volatile to prevent optimization
 
     P1OUT = 0; // Sets all output register bits to 0
 
-    while(1)
+    while(1) // loop continuously toggles LED
     {
         P1OUT ^= BIT0; // toggle P1.0
         for(i=10000; i>0; i--);  // delay
     }
-}
-
 
 void Multiblink()
 {
-    P1SEL &= ~BIT0;
-    P4SEL &= ~BIT7;
+    P1SEL &= ~BIT0; // configure P1.0 (LED) as GPIO
+    P4SEL &= ~BIT7; // configure P4.7 (LED) as GPIO
 
     P1DIR |= BIT0; // configure P1.0 as output
-    P4DIR |= BIT7;
+    P4DIR |= BIT7; // configure P4.7 as output
 
 
     volatile unsigned int i;        // volatile to prevent optimization
 
-    P1OUT = 0; // Sets all output register bits to 0
-    P4OUT = 0;
+    P1OUT = 0; // Sets all output register bits to 0 
+    P4OUT = 0; // Sets all output register bits to 0
 
-    while(1)
+    while(1) // Loops toggles the two LEDs continuously
     {
         P1OUT ^= BIT0; // toggle P1.0
         for(i=10000; i>0; i--);     // delay
         P1OUT ^= BIT0;
         P4OUT ^= BIT7;
-        for(i = 10000; i>0; i--);
+        for(i = 10000; i>0; i--);  // delay again
+                             
+      // Delays are set up so that one leds switches twice as fast as the other 
     }
 }
 
@@ -55,19 +55,19 @@ void Buttonpress()
 {
     P1SEL &= (~BIT0 & ~BIT1);
     P1DIR |= BIT0; // configure P1.0 as output
-    P1DIR &= ~BIT1;
+    P1DIR &= ~BIT1; // configure P1.1 (switch) as an input
 
 
     volatile unsigned int i;        // volatile to prevent optimization
 
-    P1OUT = 0; // Sets all output register bits to 0
+    P1OUT = 0; // Sets all output register bits to 0 initially
     P1REN |= BIT1;  // Enable Pullup/down Resistor for SW1
     P1OUT |= BIT1;  // Sets to pull up
 
     while(1)
     {
 
-    if(P1IN & BIT1)
+    if(P1IN & BIT1) // LED on lights up if button is pressed
         P1OUT |= BIT0;
     else
         P1OUT &= ~BIT0;
