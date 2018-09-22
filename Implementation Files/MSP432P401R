@@ -6,11 +6,13 @@
  */
 
 
-#include <msp430.h>
+#include "msp.h"
 
 void Simpleblink() // Blinks one LED on and off
 {
-    P1SEL &= ~BIT0; // Set port 1, pin 0 as GPIO
+    P1SEL &= ~BIT0; // MSP432 select register has to bits
+    P1SEL &= ~BIT0; // Need to clear both bits for GPIP
+    
     P1DIR |= BIT0; // configure P1.0 as an output
 
 
@@ -26,8 +28,10 @@ void Simpleblink() // Blinks one LED on and off
 
 void Multiblink()
 {
-    P1SEL &= ~BIT0; // configure P1.0 (LED) as GPIO
-    P2SEL &= ~BIT0; // configure P2.0 (LED) as GPIO
+    P1SEL0 &= ~BIT0; 
+    P1SEL1 &= ~BIT0; // configure P1.0 (LED) as GPIO
+    P2SEL0 &= ~BIT0;
+    P2SEL1 &= ~BIT0; // configure P2.0 (LED) as GPIO
 
     P1DIR |= BIT0; // configure P1.0 as output
     P2DIR |= BIT0; // configure P2.0 as output
@@ -54,7 +58,9 @@ void Multiblink()
 
 void Buttonpress()
 {
-    P1SEL &= (~BIT0 & ~BIT1);
+    P1SEL0 &= (~BIT0 & ~BIT1);
+    P1SEL1 &= (~BIT0 & ~BIT1);
+    
     P1DIR |= BIT0; // configure P1.0 as output
     P1DIR &= ~BIT1; // configure P1.1 (switch) as an input
 
